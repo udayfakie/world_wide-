@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm",
+    "build": "npm install && npm start",
     "start": "node server.js"
   },
   "author": "",
