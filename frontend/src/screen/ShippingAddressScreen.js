@@ -1,14 +1,15 @@
 import React from "react";
-
 import { Helmet } from "react-helmet-async";
 import { useState, useContext, useEffect } from "react";
+import { useNavigate} from "react-router-dom"
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { Store } from "../Store";
 import CheckOutSteps from "../components/CheckOutSteps";
 
+
 export default function ShippingAddressScreen() {
-  const navigate = useState();
+  const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     userInfo,
