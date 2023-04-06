@@ -7,9 +7,10 @@ import productRouter from "./routes/productRouter.js";
 import userRouter from "./routes/userRoutes.js";
 import OrderRouter from "./routes/OrderRouter.js";
 import cors from "cors";
+import { fileURLToPath } from "url";
+import path from "path";
 
 dotenv.config();
-
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
@@ -21,6 +22,8 @@ mongoose
 
 const app = express();
 app.use(cors());
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,6 +40,14 @@ app.use("/api/orders", OrderRouter);
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });
+
+//serving the frontend
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+});
+app.use(express.static(path.join(__dirname, "../frontend/public")));
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
